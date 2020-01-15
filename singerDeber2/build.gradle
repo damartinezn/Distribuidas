@@ -1,0 +1,32 @@
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+    id "io.freefair.lombok" version "4.1.4"
+}
+
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+dependencies {
+    //helidon con todas las dependencias
+    compile group: 'io.helidon', name: 'helidon-bom', version: '1.4.0', ext: 'pom'
+    //implementa microprofile
+    compile group: 'io.helidon.microprofile.bundles', name: 'helidon-microprofile', version: '1.4.0'   
+	//postgres
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.9.Final'
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+	//Se interpone entre jpa y hibernate
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.9.Final'    
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.29.1'
+}
+
+
+task copyLibs(type:Copy){
+	from configurations.runtime
+	into 'build/libs/libs'
+}
