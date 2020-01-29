@@ -1,0 +1,42 @@
+plugins {
+    id 'java-library'
+    id "it.gianluz.capsule" version "1.0.3"
+    id "io.freefair.lombok" version "4.1.4"
+}
+
+repositories {
+   jcenter()
+}
+
+dependencies {
+	compile group: 'io.helidon', name: 'helidon-bom', version: '1.4.0', ext: 'pom'
+
+	compile group: 'io.helidon.microprofile.bundles', name: 'helidon-microprofile', version: '1.4.0'
+	
+	compile group: 'org.microprofile-ext.config-ext', name: 'configsource-consul', version: '1.0.9'
+	
+	compile group: 'com.ecwid.consul' , name: 'consul-api', version: '1.4.4'
+	
+	compile group: 'com.ecwid.consul', name: 'consul-api', version: '1.4.4'
+	
+	//postgres
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.9.Final'
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+	//Se interpone entre jpa y hibernate
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.9.Final'
+	//    
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.29.1'
+}
+
+//Agrupar en un solo paquete
+task copyLibs(type:Copy){
+	from configurations.runtime
+	into 'build/libs/libs'
+}
+
+task ejecutable( type:FatCapsule ){
+	group = 'build'
+	applicationClass 'io.helidon.microprofile.server.Main'
+}
